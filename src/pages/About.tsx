@@ -4,8 +4,9 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { SectionLabel } from "@/components/site/SectionLabel";
 import { CapitalHumain } from "@/components/site/CapitalHumain";
 import { QHSESection } from "@/components/site/QHSESection";
-import { teamBlueprint, textureConcrete, values, stats, company, philosophie } from "@/data/site";
+import { teamBlueprint, textureConcrete, values, stats, company, philosophie, revenueData } from "@/data/site";
 import { ficheIdentite } from "@/data/legal";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const timeline = [
   { year: "2015", title: "Fondation", body: "M. Yassine Sadouk fonde Benzakani BTP à Casablanca, avec une philosophie centrée sur la qualité, le respect des délais et la satisfaction client." },
@@ -261,6 +262,77 @@ const About = () => {
           >
             Voir les réalisations <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
+        </div>
+      </section>
+      {/* ===== Évolution du chiffre d'affaires ===== */}
+      <section aria-labelledby="revenue-heading" className="container-editorial py-28 md:py-40">
+        <div className="grid gap-16 md:grid-cols-12">
+          <aside className="md:col-span-3">
+            <p className="eyebrow-accent">Croissance</p>
+          </aside>
+          <div className="md:col-span-9">
+            <h2 id="revenue-heading" className="h-display mb-12 text-3xl text-balance md:text-4xl lg:text-5xl">
+              Évolution du chiffre d'affaires
+              <span className="text-muted-foreground"> 2018 — 2024</span>
+            </h2>
+            <div className="border border-border bg-muted/30 p-6 md:p-10">
+              <ResponsiveContainer width="100%" height={320}>
+                <AreaChart data={revenueData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="caGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis
+                    dataKey="year"
+                    tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tickFormatter={(v) => `${v}M`}
+                    tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+                    axisLine={false}
+                    tickLine={false}
+                    width={40}
+                  />
+                  <Tooltip
+                    formatter={(_: number, __: string, props: { payload?: { label?: string } }) => [
+                      props.payload?.label ?? "",
+                      "Chiffre d'affaires",
+                    ]}
+                    labelFormatter={(year: number) => `Année ${year}`}
+                    contentStyle={{
+                      background: "hsl(var(--background))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: 0,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 11,
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke="hsl(var(--accent))"
+                    strokeWidth={2}
+                    fill="url(#caGradient)"
+                    dot={{ r: 4, fill: "hsl(var(--accent))", strokeWidth: 0 }}
+                    activeDot={{ r: 6, fill: "hsl(var(--accent))", strokeWidth: 0 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+              <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
+                {revenueData.map((d) => (
+                  <div key={d.year} className="flex flex-col">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{d.year}</span>
+                    <span className="font-display text-lg font-semibold">{d.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </SiteLayout>

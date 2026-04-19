@@ -120,7 +120,7 @@ const Projects = () => {
                 <h3 className="mt-3 font-display text-2xl text-balance transition-colors group-hover:text-accent md:text-3xl">
                   {p.title}
                 </h3>
-                <dl className="mt-5 grid grid-cols-3 gap-4 text-sm">
+                <dl className="mt-5 grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <dt className="eyebrow">Surface</dt>
                     <dd className="mt-1">{p.surface}</dd>
@@ -128,10 +128,6 @@ const Projects = () => {
                   <div>
                     <dt className="eyebrow">Niveaux</dt>
                     <dd className="mt-1">{p.levels}</dd>
-                  </div>
-                  <div>
-                    <dt className="eyebrow">Budget</dt>
-                    <dd className="mt-1">{p.budget}</dd>
                   </div>
                 </dl>
               </li>
@@ -186,7 +182,7 @@ const Projects = () => {
                 <br />
                 Localisation&nbsp;: <span className="text-foreground">{active.location}</span>
               </p>
-              <dl className="grid grid-cols-2 gap-6 border-t border-border pt-6 sm:grid-cols-3">
+              <dl className="grid grid-cols-2 gap-6 border-t border-border pt-6">
                 <div>
                   <dt className="eyebrow">Surface</dt>
                   <dd className="mt-2 font-display text-2xl">{active.surface}</dd>
@@ -194,10 +190,6 @@ const Projects = () => {
                 <div>
                   <dt className="eyebrow">Niveaux</dt>
                   <dd className="mt-2 font-display text-2xl">{active.levels}</dd>
-                </div>
-                <div>
-                  <dt className="eyebrow">Budget</dt>
-                  <dd className="mt-2 font-display text-2xl">{active.budget}</dd>
                 </div>
               </dl>
               <Link

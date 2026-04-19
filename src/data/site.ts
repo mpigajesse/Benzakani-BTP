@@ -9,6 +9,26 @@ import teamBlueprint from "@/assets/team-blueprint.jpg";
 import serviceGros from "@/assets/service-grosoeuvre.jpg";
 import serviceSecond from "@/assets/service-secondoeuvre.jpg";
 import serviceFin from "@/assets/service-finitions.jpg";
+import pdfCover from "@/assets/pdf-cover.jpg";
+import pdfProjetFacade from "@/assets/pdf-projet-facade.jpg";
+import pdfProjetChantier from "@/assets/pdf-projet-chantier.jpg";
+import pdfProjetResidential from "@/assets/pdf-projet-residential.jpg";
+import pdfCoffrage from "@/assets/pdf-coffrage.jpg";
+import pdfStructure from "@/assets/pdf-structure.jpg";
+import pdfFondations from "@/assets/pdf-fondations.jpg";
+import pdfStructureAvancee from "@/assets/pdf-structure-avancee.jpg";
+import pdfChantierVue from "@/assets/pdf-chantier-vue.jpg";
+import pdfOuvrage from "@/assets/pdf-ouvrage.jpg";
+import pdfFerraillage from "@/assets/pdf-ferraillage.jpg";
+import pdfDalle from "@/assets/pdf-dalle.jpg";
+import pdfElevation from "@/assets/pdf-elevation.jpg";
+import pdfFinitionsSol from "@/assets/pdf-finitions-sol.jpg";
+import pdfCuisine from "@/assets/pdf-cuisine.jpg";
+import pdfMenuiserie from "@/assets/pdf-menuiserie.jpg";
+import pdfEquipe from "@/assets/pdf-equipe.jpg";
+import pdfSecondOeuvre from "@/assets/pdf-second-oeuvre.jpg";
+import pdfVilla from "@/assets/pdf-villa.jpg";
+import pdfReferences from "@/assets/pdf-references.jpg";
 
 export interface Company {
   name: string;
@@ -305,7 +325,6 @@ export type Project = {
   category: "Résidentiel" | "Promotion" | "Institutionnel" | "Rénovation";
   surface: string;
   levels: string;
-  budget: string;
   year: number;
   status: "Livré" | "En cours";
   image: string;
@@ -321,10 +340,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "130 m²",
     levels: "R+3",
-    budget: "1.5M DH",
     year: 2022,
     status: "Livré",
-    image: projectVilla,
+    image: pdfProjetFacade,
   },
   {
     id: "ben-kassem-286",
@@ -334,10 +352,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "108 m²",
     levels: "R+3",
-    budget: "1.3M DH",
     year: 2022,
     status: "Livré",
-    image: projectInterior,
+    image: pdfProjetResidential,
   },
   {
     id: "el-baitar-29",
@@ -347,10 +364,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "118 m²",
     levels: "R+3",
-    budget: "1.6M DH",
     year: 2022,
     status: "Livré",
-    image: projectVilla,
+    image: pdfCoffrage,
   },
   {
     id: "taoufik-481",
@@ -360,10 +376,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "98 m²",
     levels: "R+3",
-    budget: "1.1M DH",
     year: 2021,
     status: "Livré",
-    image: projectInterior,
+    image: pdfStructure,
   },
   {
     id: "ben-kassem-256",
@@ -373,10 +388,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "108 m²",
     levels: "R+3+SS",
-    budget: "1.6M DH",
     year: 2023,
     status: "Livré",
-    image: heroConstruction,
+    image: pdfElevation,
   },
   {
     id: "abrar-118",
@@ -386,10 +400,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "161 m²",
     levels: "R+3+SS+M",
-    budget: "870K DH",
     year: 2021,
     status: "Livré",
-    image: textureConcrete,
+    image: pdfDalle,
   },
   {
     id: "bassatin-el-oulfa",
@@ -399,10 +412,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "200 m²",
     levels: "R+3",
-    budget: "720K DH",
     year: 2020,
     status: "Livré",
-    image: projectVilla,
+    image: pdfVilla,
   },
   // ── YTIB PROMO (5 projets) ────────────────────────────────────────────────
   {
@@ -413,10 +425,9 @@ export const projects: Project[] = [
     category: "Promotion",
     surface: "160 m²",
     levels: "R+3+SS+M",
-    budget: "800K DH",
     year: 2022,
     status: "Livré",
-    image: projectVilla,
+    image: pdfProjetChantier,
   },
   {
     id: "ytib-tit-mellil",
@@ -426,10 +437,9 @@ export const projects: Project[] = [
     category: "Promotion",
     surface: "300 m²",
     levels: "R+3",
-    budget: "800K DH",
     year: 2022,
     status: "Livré",
-    image: projectInterior,
+    image: pdfChantierVue,
   },
   {
     id: "ytib-el-badr",
@@ -439,10 +449,9 @@ export const projects: Project[] = [
     category: "Promotion",
     surface: "160 m²",
     levels: "R+3+SS+M",
-    budget: "750K DH",
     year: 2022,
     status: "Livré",
-    image: textureConcrete,
+    image: pdfStructureAvancee,
   },
   {
     id: "ytib-chellalat",
@@ -452,10 +461,9 @@ export const projects: Project[] = [
     category: "Promotion",
     surface: "170 m²",
     levels: "R+3+SS+M",
-    budget: "950K DH",
     year: 2023,
     status: "Livré",
-    image: projectVilla,
+    image: pdfFondations,
   },
   {
     id: "ytib-almaz",
@@ -465,52 +473,48 @@ export const projects: Project[] = [
     category: "Promotion",
     surface: "200 m²",
     levels: "R+1+SS",
-    budget: "750K DH",
     year: 2023,
     status: "Livré",
-    image: projectInterior,
+    image: pdfOuvrage,
   },
   // ── État / Province de Settat (1 projet) ──────────────────────────────────
   {
     id: "settat-annexe",
-    title: "Siège 2ème Annexe Administrative",
+    title: "Siège 2ème Annexe Administrative + Poste Forces Auxiliaires, El Borouj",
     client: "Province de Settat",
     location: "El Borouj",
     category: "Institutionnel",
     surface: "—",
     levels: "—",
-    budget: "1.92M DH",
     year: 2021,
     status: "Livré",
-    image: heroConstruction,
+    image: pdfReferences,
   },
   // ── État / Province de Berrechid (1 projet) ───────────────────────────────
   {
     id: "berrechid-prescolaires",
-    title: "10 unités préscolaires",
+    title: "Construction de 10 unités préscolaires aux communes Laghnimiyine et Ouled Abbou",
     client: "Province de Berrechid",
     location: "Laghnimiyine & Ouled Abbou",
     category: "Institutionnel",
     surface: "—",
     levels: "—",
-    budget: "1.49M DH",
     year: 2022,
     status: "Livré",
-    image: textureConcrete,
+    image: pdfFerraillage,
   },
   // ── Rachid Taouss (1 projet) ──────────────────────────────────────────────
   {
     id: "costa-237-bouznika",
-    title: "Habitation COSTA N°237, Bouznika",
+    title: "Habitation COSTA N°237, double façade, Bouznika",
     client: "Rachid Taouss",
     location: "Bouznika",
     category: "Résidentiel",
     surface: "130 m²",
     levels: "R+3",
-    budget: "900K DH",
     year: 2023,
     status: "Livré",
-    image: projectVilla,
+    image: pdfFinitionsSol,
   },
   // ── Bulk Building (1 projet) ──────────────────────────────────────────────
   {
@@ -521,10 +525,9 @@ export const projects: Project[] = [
     category: "Résidentiel",
     surface: "130 m²",
     levels: "R+3",
-    budget: "700K DH",
     year: 2023,
     status: "Livré",
-    image: heroConstruction,
+    image: pdfSecondOeuvre,
   },
 ];
 
@@ -681,3 +684,19 @@ export {
   serviceSecond,
   serviceFin,
 };
+
+export interface RevenuePoint {
+  year: number;
+  value: number;
+  label: string;
+}
+
+export const revenueData: RevenuePoint[] = [
+  { year: 2018, value: 0.9,  label: "900K DH" },
+  { year: 2019, value: 2,    label: "2M DH" },
+  { year: 2020, value: 4,    label: "4M DH" },
+  { year: 2021, value: 9,    label: "9M DH" },
+  { year: 2022, value: 12,   label: "12M DH" },
+  { year: 2023, value: 14,   label: "14M DH" },
+  { year: 2024, value: 16,   label: "16M DH" },
+];

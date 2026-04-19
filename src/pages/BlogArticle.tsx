@@ -7,18 +7,49 @@ import { articleBodies } from "@/data/articles/index";
 type ContentBlock =
   | { type: "h2"; text: string }
   | { type: "h3"; text: string }
-  | { type: "p"; text: string };
+  | { type: "p"; text: string }
+  | { type: "li"; text: string }
+  | { type: "table"; headers: string[]; rows: string[][] };
+
+const parseRow = (line: string) =>
+  line.split("|").slice(1, -1).map((c) => c.trim());
+
+const isSeparator = (line: string) =>
+  /^\|[\s\-|:]+\|$/.test(line);
 
 function parseBody(raw: string): ContentBlock[] {
-  return raw
-    .split("\n")
-    .map((line) => line.trimEnd())
-    .filter((line) => line.length > 0)
-    .map((line): ContentBlock => {
-      if (line.startsWith("## ")) return { type: "h2", text: line.slice(3) };
-      if (line.startsWith("### ")) return { type: "h3", text: line.slice(4) };
-      return { type: "p", text: line };
-    });
+  const lines = raw.split("\n").map((l) => l.trimEnd()).filter((l) => l.length > 0);
+  const blocks: ContentBlock[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (line.startsWith("|")) {
+      const tableLines: string[] = [];
+      while (i < lines.length && lines[i].startsWith("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      // Need at least header + separator + 1 row
+      if (tableLines.length >= 3 && isSeparator(tableLines[1])) {
+        blocks.push({
+          type: "table",
+          headers: parseRow(tableLines[0]),
+          rows: tableLines.slice(2).map(parseRow),
+        });
+      }
+      continue;
+    }
+
+    if (line.startsWith("## "))      blocks.push({ type: "h2", text: line.slice(3) });
+    else if (line.startsWith("### ")) blocks.push({ type: "h3", text: line.slice(4) });
+    else if (line.startsWith("- "))  blocks.push({ type: "li", text: line.slice(2) });
+    else                              blocks.push({ type: "p",  text: line });
+    i++;
+  }
+
+  return blocks;
 }
 
 const BlogArticle = () => {
@@ -96,40 +127,58 @@ const BlogArticle = () => {
           {blocks.map((block, i) => {
             if (block.type === "h2") {
               return (
-                <h2
-                  key={i}
-                  className="h-display mb-6 mt-14 text-2xl font-bold first:mt-0 md:text-3xl"
-                >
+                <h2 key={i} className="h-display mb-6 mt-14 text-2xl font-bold first:mt-0 md:text-3xl">
                   {block.text}
                 </h2>
               );
             }
             if (block.type === "h3") {
               return (
-                <h3
-                  key={i}
-                  className="mb-4 mt-10 font-display text-xl font-semibold md:text-2xl"
-                >
+                <h3 key={i} className="mb-4 mt-10 font-display text-xl font-semibold md:text-2xl">
                   {block.text}
                 </h3>
               );
             }
-            // Paragraph — detect bullet lines starting with - or **
-            if (block.text.startsWith("- ")) {
+            if (block.type === "li") {
               return (
-                <li
-                  key={i}
-                  className="ml-5 list-disc py-1 text-base leading-relaxed text-foreground/80"
-                >
-                  {block.text.slice(2)}
+                <li key={i} className="ml-5 list-disc py-1 text-base leading-relaxed text-foreground/80">
+                  {block.text}
                 </li>
               );
             }
+            if (block.type === "table") {
+              return (
+                <div key={i} className="my-8 overflow-x-auto rounded-none border border-border">
+                  <table className="w-full border-collapse text-sm">
+                    <thead>
+                      <tr className="border-b border-border bg-muted/50">
+                        {block.headers.map((h, j) => (
+                          <th
+                            key={j}
+                            className="px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.14em] text-foreground"
+                          >
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {block.rows.map((row, j) => (
+                        <tr key={j} className="border-b border-border last:border-0 even:bg-muted/20">
+                          {row.map((cell, k) => (
+                            <td key={k} className="px-4 py-3 text-foreground/80">
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            }
             return (
-              <p
-                key={i}
-                className="mb-5 text-base leading-relaxed text-foreground/80 md:text-lg"
-              >
+              <p key={i} className="mb-5 text-base leading-relaxed text-foreground/80 md:text-lg">
                 {block.text}
               </p>
             );

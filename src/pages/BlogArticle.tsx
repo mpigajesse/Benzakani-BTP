@@ -9,7 +9,27 @@ type ContentBlock =
   | { type: "h3"; text: string }
   | { type: "p"; text: string }
   | { type: "li"; text: string }
+  | { type: "oli"; text: string; num: string }
   | { type: "table"; headers: string[]; rows: string[][] };
+
+// Render inline **bold** markers as <strong>
+function renderInline(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  if (parts.length === 1) return text;
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith("**") && part.endsWith("**") ? (
+          <strong key={i} className="font-semibold text-foreground">
+            {part.slice(2, -2)}
+          </strong>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+}
 
 const parseRow = (line: string) =>
   line.split("|").slice(1, -1).map((c) => c.trim());
@@ -31,7 +51,6 @@ function parseBody(raw: string): ContentBlock[] {
         tableLines.push(lines[i]);
         i++;
       }
-      // Need at least header + separator + 1 row
       if (tableLines.length >= 3 && isSeparator(tableLines[1])) {
         blocks.push({
           type: "table",
@@ -42,10 +61,12 @@ function parseBody(raw: string): ContentBlock[] {
       continue;
     }
 
-    if (line.startsWith("## "))      blocks.push({ type: "h2", text: line.slice(3) });
-    else if (line.startsWith("### ")) blocks.push({ type: "h3", text: line.slice(4) });
-    else if (line.startsWith("- "))  blocks.push({ type: "li", text: line.slice(2) });
-    else                              blocks.push({ type: "p",  text: line });
+    const orderedMatch = line.match(/^(\d+)\.\s+(.+)$/);
+    if (line.startsWith("## "))      blocks.push({ type: "h2",  text: line.slice(3) });
+    else if (line.startsWith("### ")) blocks.push({ type: "h3",  text: line.slice(4) });
+    else if (line.startsWith("- "))  blocks.push({ type: "li",  text: line.slice(2) });
+    else if (orderedMatch)            blocks.push({ type: "oli", text: orderedMatch[2], num: orderedMatch[1] });
+    else                              blocks.push({ type: "p",   text: line });
     i++;
   }
 
@@ -128,35 +149,40 @@ const BlogArticle = () => {
             if (block.type === "h2") {
               return (
                 <h2 key={i} className="h-display mb-6 mt-14 text-2xl font-bold first:mt-0 md:text-3xl">
-                  {block.text}
+                  {renderInline(block.text)}
                 </h2>
               );
             }
             if (block.type === "h3") {
               return (
                 <h3 key={i} className="mb-4 mt-10 font-display text-xl font-semibold md:text-2xl">
-                  {block.text}
+                  {renderInline(block.text)}
                 </h3>
               );
             }
             if (block.type === "li") {
               return (
                 <li key={i} className="ml-5 list-disc py-1 text-base leading-relaxed text-foreground/80">
-                  {block.text}
+                  {renderInline(block.text)}
                 </li>
+              );
+            }
+            if (block.type === "oli") {
+              return (
+                <div key={i} className="flex gap-3 py-1 text-base leading-relaxed text-foreground/80">
+                  <span className="shrink-0 font-mono text-[11px] text-accent pt-1">{block.num}.</span>
+                  <span>{renderInline(block.text)}</span>
+                </div>
               );
             }
             if (block.type === "table") {
               return (
-                <div key={i} className="my-8 overflow-x-auto rounded-none border border-border">
+                <div key={i} className="my-8 overflow-x-auto border border-border">
                   <table className="w-full border-collapse text-sm">
                     <thead>
                       <tr className="border-b border-border bg-muted/50">
                         {block.headers.map((h, j) => (
-                          <th
-                            key={j}
-                            className="px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.14em] text-foreground"
-                          >
+                          <th key={j} className="px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.14em] text-foreground">
                             {h}
                           </th>
                         ))}
@@ -167,7 +193,7 @@ const BlogArticle = () => {
                         <tr key={j} className="border-b border-border last:border-0 even:bg-muted/20">
                           {row.map((cell, k) => (
                             <td key={k} className="px-4 py-3 text-foreground/80">
-                              {cell}
+                              {renderInline(cell)}
                             </td>
                           ))}
                         </tr>
@@ -179,7 +205,7 @@ const BlogArticle = () => {
             }
             return (
               <p key={i} className="mb-5 text-base leading-relaxed text-foreground/80 md:text-lg">
-                {block.text}
+                {renderInline(block.text)}
               </p>
             );
           })}

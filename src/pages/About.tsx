@@ -55,7 +55,7 @@ const About = () => {
       <section aria-label="Photo de chantier Benzakani BTP" className="relative">
         <img
           src={teamBlueprint}
-          alt="Conducteur de travaux Benzakani étudiant les plans"
+          alt="Équipe Benzakani BTP sur chantier"
           className="aspect-[16/8] w-full object-cover"
           loading="lazy"
           width={1920}
@@ -64,7 +64,8 @@ const About = () => {
         <div className="container-editorial">
           <p className="-mt-10 ml-auto max-w-md bg-background p-8 font-mono text-[12px] uppercase tracking-[0.18em] text-muted-foreground md:-mt-14">
             <span className="text-accent">Cliché 03/24</span> — Réunion de chantier hebdomadaire,
-            programme YTIB Promo · Berrechid.
+            Capital humain Benzakani BTP — équipe pluridisciplinaire
+            engagée sur chaque réalisation.
           </p>
         </div>
       </section>

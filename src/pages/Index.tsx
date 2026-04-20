@@ -243,10 +243,6 @@ const Index = () => {
                 <dd className="mt-1 font-display text-2xl">R+3</dd>
               </div>
               <div>
-                <dt className="eyebrow">Budget</dt>
-                <dd className="mt-1 font-display text-2xl">1.5M DH</dd>
-              </div>
-              <div>
                 <dt className="eyebrow">Délai</dt>
                 <dd className="mt-1 font-display text-2xl">11 mois</dd>
               </div>
@@ -393,7 +389,7 @@ const Index = () => {
 
         <div className="mt-16 grid gap-10 md:grid-cols-3">
           {articles.slice(0, 3).map((a) => (
-            <Link key={a.slug} to="/blog" className="group block">
+            <Link key={a.slug} to={`/blog/${a.slug}`} className="group block">
               <div className="overflow-hidden">
                 <img
                   src={a.image}

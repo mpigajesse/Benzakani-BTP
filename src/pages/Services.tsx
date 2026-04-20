@@ -111,7 +111,7 @@ const Services = () => {
                 <div className="overflow-hidden">
                   <img
                     src={s.image}
-                    alt={`${s.name} — Benzakani BTP`}
+                    alt={s.imageAlt}
                     className="aspect-[4/5] w-full object-cover transition-transform duration-[1500ms] hover:scale-105"
                     style={{ transitionTimingFunction: "var(--ease-precise)" }}
                     loading="lazy"

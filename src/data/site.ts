@@ -1,14 +1,14 @@
 // Centralized site data — single source of truth.
 // Content adapted from Benzakani BTP corporate identity.
 
-import heroConstruction from "@/assets/hero-construction.jpg";
-import textureConcrete from "@/assets/texture-concrete.jpg";
-import projectVilla from "@/assets/project-villa.jpg";
-import projectInterior from "@/assets/project-interior.jpg";
-import teamBlueprint from "@/assets/team-blueprint.jpg";
-import serviceGros from "@/assets/service-grosoeuvre.jpg";
-import serviceSecond from "@/assets/service-secondoeuvre.jpg";
-import serviceFin from "@/assets/service-finitions.jpg";
+import heroConstruction from "@/assets/pdf-cover.jpg";
+import textureConcrete from "@/assets/pdf-ouvrage.jpg";
+import projectVilla from "@/assets/pdf-villa.jpg";
+import projectInterior from "@/assets/pdf-projet-residential.jpg";
+import teamBlueprint from "@/assets/pdf-equipe.jpg";
+import serviceGros from "@/assets/pdf-elevation.jpg";
+import serviceSecond from "@/assets/pdf-second-oeuvre.jpg";
+import serviceFin from "@/assets/pdf-finitions-sol.jpg";
 import pdfCover from "@/assets/pdf-cover.jpg";
 import pdfProjetFacade from "@/assets/pdf-projet-facade.jpg";
 import pdfProjetChantier from "@/assets/pdf-projet-chantier.jpg";
@@ -96,6 +96,8 @@ export type Service = {
   /** Structured sub-service groups from the official PDF (domaines, lots, etc.) */
   groups?: ServiceSubGroup[];
   image: string;
+  /** Descriptive alt text matching the actual photo content */
+  imageAlt: string;
 };
 
 export const services: Service[] = [
@@ -132,6 +134,7 @@ export const services: Service[] = [
       },
     ],
     image: serviceGros,
+    imageAlt: "Élévation de structure béton armé en chantier — Benzakani BTP",
   },
   {
     id: "second-oeuvre",
@@ -180,6 +183,7 @@ export const services: Service[] = [
       },
     ],
     image: serviceSecond,
+    imageAlt: "Travaux de second œuvre — installation technique en cours — Benzakani BTP",
   },
   {
     id: "finitions",
@@ -220,6 +224,7 @@ export const services: Service[] = [
       },
     ],
     image: serviceFin,
+    imageAlt: "Finitions sol en marbre et carrelage grand format — Benzakani BTP",
   },
 ];
 

@@ -1,8 +1,23 @@
-# Welcome to your Lovable project
+# Benzakani BTP
 
-TODO: Document your project here
+Site vitrine d'une entreprise de construction et de travaux publics basée à Casablanca : présentation de l'entreprise, services (gros œuvre, second œuvre, finitions), réalisations, estimation de budget et articles de conseil.
+
+**Démo en ligne : [benzakani-btp.onrender.com](https://benzakani-btp.onrender.com)**
+Site statique, sans envoi de données : le formulaire de contact prépare un e-mail dans la messagerie du visiteur. La démo met environ 50 secondes à se réveiller au premier accès.
 
 ---
+
+## Pages
+
+| Page | Contenu |
+| --- | --- |
+| Accueil | Présentation, chiffres clés, savoir-faire, appel à projet |
+| À propos | Histoire de l'entreprise, équipe, valeurs |
+| Services | Gros œuvre, second œuvre, finitions |
+| Réalisations | Projets livrés (villas et immeubles de R+1 à R+3) avec photos |
+| Outils | Estimateur de budget : surface, type de bien et niveau de prestation donnent une fourchette en DH/m² |
+| Blog | Articles de conseil : choisir un entrepreneur, normes parasismiques, isolation thermique… |
+| Contact | Formulaire qui ouvre un e-mail pré-rempli, coordonnées |
 
 ## Stack Technique
 
@@ -32,7 +47,7 @@ TODO: Document your project here
 
 ```bash
 # Clone du projet
-git clone <url-du-repo>
+git clone https://github.com/mpigajesse/Benzakani-BTP.git
 
 # Accéder au répertoire du projet
 cd Benzakani-BTP
@@ -48,10 +63,14 @@ npm run dev
 
 | Commande | Description |
 |----------|-------------|
-| `npm run dev` | Serveur de développement (port 5173 par défaut) |
+| `npm run dev` | Serveur de développement (http://localhost:8080) |
 | `npm run build` | Build de production |
 | `npm run build:dev` | Build en mode développement |
 | `npm run preview` | Prévisualiser le build de production |
 | `npm run test` | Tests unitaires (Vitest, mode run unique) |
 | `npm run test:watch` | Tests unitaires en mode watch |
 | `npm run lint` | Analyse statique ESLint |
+
+## Auteur
+
+Jesse MPIGA-ODOUMBA — [portfolio](https://mpj.indevs.in) · [GitHub](https://github.com/mpigajesse)

@@ -50,6 +50,22 @@ const Contact = () => {
       return;
     }
     setErrors({});
+    // Le site n'a pas de serveur d'envoi : afficher « Message reçu » sans rien
+    // transmettre aurait trompé le visiteur. On ouvre donc sa messagerie avec
+    // le message prérempli, adressé à l'entreprise.
+    const { name, email, phone, message } = parsed.data;
+    const sujet = `Demande de projet — ${name}`;
+    const corps = [
+      message,
+      "",
+      `Nom : ${name}`,
+      `E-mail : ${email}`,
+      phone ? `Téléphone : ${phone}` : "",
+      budget ? `Budget : ${budget}` : "",
+    ]
+      .filter((l, i) => l !== "" || i === 1)
+      .join("\n");
+    window.location.href = `mailto:${company.email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
     const form = e.currentTarget;
     setSent(true);
     form.reset();
@@ -74,9 +90,18 @@ const Contact = () => {
               <div className="mt-12 flex items-start gap-4 border border-accent bg-accent/5 p-8 animate-fade-up">
                 <Check className="mt-1 shrink-0 text-accent" />
                 <div>
-                  <h2 className="font-display text-2xl">Message reçu</h2>
+                  <h2 className="font-display text-2xl">Votre message est prêt</h2>
                   <p className="mt-2 text-muted-foreground">
-                    Un membre de notre équipe vous contactera sous 24h ouvrées.
+                    Votre messagerie s'est ouverte avec le message prérempli : envoyez-le
+                    pour nous joindre. Elle ne s'est pas ouverte ? Écrivez-nous à{" "}
+                    <a href={`mailto:${company.email}`} className="link-underline text-foreground">
+                      {company.email}
+                    </a>{" "}
+                    ou appelez le{" "}
+                    <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="link-underline text-foreground">
+                      {company.phone}
+                    </a>
+                    .
                   </p>
                   <button
                     onClick={() => setSent(false)}

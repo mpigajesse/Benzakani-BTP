@@ -8,6 +8,9 @@ export const SiteHeader = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  // Seul l'accueil ouvre sur une photo sombre : tant que l'en-tête y est
+  // transparent, son texte sombre devenait illisible. On l'éclaircit alors.
+  const onDark = location.pathname === "/" && !scrolled && !open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -44,10 +47,20 @@ export const SiteHeader = () => {
           aria-label={`${company.name} — accueil`}
           className="group flex items-baseline gap-2"
         >
-          <span className="font-display text-lg font-bold tracking-tight md:text-xl">
+          <span
+            className={cn(
+              "font-display text-lg font-bold tracking-tight transition-colors md:text-xl",
+              onDark && "text-white"
+            )}
+          >
             BEN ZAKANI
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          <span
+            className={cn(
+              "font-mono text-[10px] uppercase tracking-[0.2em] transition-colors",
+              onDark ? "text-white/70" : "text-muted-foreground"
+            )}
+          >
             BTP / EST. {company.founded}
           </span>
         </Link>
@@ -61,7 +74,13 @@ export const SiteHeader = () => {
               className={({ isActive }) =>
                 cn(
                   "group relative px-3 py-2 text-[13px] font-medium tracking-wide transition-colors",
-                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  onDark
+                    ? isActive
+                      ? "text-white"
+                      : "text-white/75 hover:text-white"
+                    : isActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
                 )
               }
             >
@@ -84,7 +103,10 @@ export const SiteHeader = () => {
         <div className="flex items-center gap-3">
           <a
             href={`tel:${company.phone.replace(/\s/g, "")}`}
-            className="hidden font-mono text-[11px] tracking-widest text-muted-foreground transition-colors hover:text-foreground xl:block"
+            className={cn(
+              "hidden font-mono text-[11px] tracking-widest transition-colors xl:block",
+              onDark ? "text-white/75 hover:text-white" : "text-muted-foreground hover:text-foreground"
+            )}
             aria-label={`Appeler le ${company.phone}`}
           >
             {company.phone}
@@ -100,7 +122,10 @@ export const SiteHeader = () => {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center border border-border lg:hidden"
+            className={cn(
+              "grid h-10 w-10 place-items-center border transition-colors lg:hidden",
+              onDark ? "border-white/40 text-white" : "border-border"
+            )}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"

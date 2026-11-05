@@ -80,7 +80,7 @@ const BlogArticle = () => {
 
   if (!article || !body) {
     return (
-      <SiteLayout headerSpacer>
+      <SiteLayout headerSpacer title="Article introuvable">
         <div className="container-editorial flex min-h-[60vh] flex-col items-center justify-center gap-6 py-24">
           <p className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
             Article introuvable
@@ -101,7 +101,7 @@ const BlogArticle = () => {
   const otherArticles = articles.filter((a) => a.slug !== slug).slice(0, 3);
 
   return (
-    <SiteLayout headerSpacer>
+    <SiteLayout headerSpacer title={article.title}>
       {/* ===== Hero ===== */}
       <section className="container-editorial pt-20 pb-12 md:pt-28 md:pb-16">
         <Link
